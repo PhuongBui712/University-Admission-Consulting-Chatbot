@@ -1,0 +1,1 @@
+# TODO: this file will handle loading documents and splitting into chunks before embedding and store to vector db

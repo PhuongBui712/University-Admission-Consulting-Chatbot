@@ -1,0 +1,5 @@
+APIFY_CONFIG:
+  'startUrls': ["https://tuyensinh.hcmus.edu.vn/"]
+  'maxCrawlDepth': 5
+  'dynamicContentWaitSecs': 20
+  'saveFiles': True
