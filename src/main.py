@@ -1,4 +1,4 @@
-from src.scraper import Scraper
+from src.scraper.scraper import Scraper
 from src.vectorstore import VectorStore
 from src.rag_chain import RAG_chain
 from src.utils import load_config
