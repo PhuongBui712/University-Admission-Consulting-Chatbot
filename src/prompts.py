@@ -11,9 +11,45 @@ Question: {question}
 Context: {context}
 <|eot_id|><|start_header_id|>assistant<|end_header_id|>"""
 
-IMAGE_EXTRACTOR_PROMPT = """
+
+IMAGE_EXTRACTOR_PROMPT = """Scan over and detect what is in this image. 
+Then, if image doesn't contain any kind of data (e.g. text, table), return "nothing" exactly. \
+Otherwise, if the image only contains text, parse and return the most meaningful text because text in a image \
+may be stylized (such as rotate text, big and small character, row-by-row character) to make it more attractive.\
+Notice that just parse the text and skip all other objects.
+Finally, if the image have only either table or both of text and table, parse it and return in the most accurate, \
+human-readable, and data - integrity way."""
+
+
+BACKUP_IMAGE_EXTRACTOR_PROMPT_2 = """
 Scan over and detect what is in this image. 
-Then, if image doesn't contain any kind of data (e.g. text, table), return "Nothing". \
+Then, if image doesn't contain any kind of data (e.g. text, table), return "nothing" exactly. \
+Otherwise, if the image only contains text, parse and return the most meaningful text because text in a image \
+may be stylized (such as rotate text, big and small character, row-by-row character) to make it more attractive.\
+Notice that just parse the text and skip all other objects.
+Finally, if the image have only either table or both of text and table, parse it and return in the most accurate, \
+human-readable, and data - integrity way.
+For example: an image has a title is text and a table could be parsed like following
+TRƯỜNG ĐẠI HỌC KHOA HỌC TỰ NHIÊN
+Điểm chuẩn các phương thức xét tuyển năm 2023
+Lĩnh vực khoa học tự nhiên
+|----------|-------------------|-----------------------------------------------------------------------|-------|-------|-------|
+| Mã ngành | Ngành, nhóm ngành | PTXT2                                                                 | PTXT3 | PTXT4 | PTXT6 |
+|          |                   |-----------------------------------------------------------------------|       |       |       |
+|          |                   | Ưu tiên xét tuyển thẳng (ĐHQG - HCM) | Ưu tiên xét tuyển (ĐHQG - HCM) |       |       |       |
+|----------|-------------------|-----------------------------------------------------------------------|-------|-------|-------|
+|12342     | Hải dương học     |  8.90                                |  8.39                          | 19.00 | 600   |   -   |
+|----------|-------------------|-----------------------------------------------------------------------|-------|-------|-------|
+Lĩnh vực khoa học sự sống
+|----------|-------------------|-----------------------------------------------------------------------|-------|-------|-------|
+|12343     | Sinh học          |  8.50                                |  8.16                          | 21.50 | 650   |   -   |
+|----------|-------------------|-----------------------------------------------------------------------|-------|-------|-------|
+"""
+
+
+BACKUP_IMAGE_EXTRACTOR_PROMPT_1 = """
+Scan over and detect what is in this image. 
+Then, if image doesn't contain any kind of data (e.g. text, table), return "nothing" exactly. \
 Otherwise, if the image only contains text, parse and return the most meaningful text because text in a image \
 may be stylized (such as rotate text, big and small charater, row-by-row character) to make it more attractive.\
 Notice that just parse the text and skip all other objects.
@@ -39,6 +75,7 @@ Lĩnh vực khoa học sự sống
 The result you have to return could be like that:
 TRƯỜNG ĐẠI HỌC KHOA HỌC TỰ NHIÊN
 Điểm chuẩn các phương thức xét tuyển năm 2023
+-----------------------------Start Table-----------------------------
 I. Lĩnh vực khoa học tự nhiên
 1. Mã ngành: 12342
     - Ngành, nhóm ngành: Hải dương học
@@ -57,4 +94,5 @@ II. Lĩnh vực khoa học sự sống
     - PTXT3: 21.50
     - PTXT4: 650
     - PTXT6: không có
+------------------------------End Table------------------------------
 """
