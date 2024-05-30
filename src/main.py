@@ -1,37 +1,41 @@
-from src.scraper.scraper import Scraper
-from src.vectorstore import VectorStore
-from src.rag_chain import RAG_chain
-from src.utils import load_config
+import os
+from dotenv import load_dotenv
+from langchain_experimental.text_splitter import SemanticChunker
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_google_genai import GoogleGenerativeAI
+from langchain_cohere import CohereRerank
 
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.embeddings import OllamaEmbeddings
-from langchain_community.llms import Ollama
+from vectorstore import VectorStore
+from rag_chain import RAG_chain
+from utils import json_to_documents, get_device
 
 
 def main():
-    config = load_config()
-
-    # crape data
-    scraper = Scraper(config=config['APIFY_CONFIG'])
-    docs = scraper.scrape()
+    # get data
+    docs = json_to_documents('scraper/tmp_docs.json')
 
     # chunking
-    splitter = RecursiveCharacterTextSplitter(
-        separators=['\n\n', '\n', ' ', ''],
-        chunk_size=512,
-        chunk_overlap=128,
+    embedding = HuggingFaceEmbeddings(
+        model_name='bkai-foundation-models/vietnamese-bi-encoder',
+        cache_folder='/Users/btp712/Code/University Admission Consulting Chatbot/cache',
+        model_kwargs={'device': get_device()},
     )
+    splitter = SemanticChunker(embedding, breakpoint_threshold_type="percentile")
     chunks = splitter.split_documents(docs)
 
     # load into db
-    embedding = OllamaEmbeddings(model='nomic-embed-text', num_gpu=1)
     vector_store = VectorStore(embedding)
-    vector_store.indexing(chunks, 'source')
+    vector_store.indexing(chunks, source_id_key='source')
 
     # create chain
-    llm = Ollama(model='llama3', num_gpu=1)
-    retriever = vector_store.get_retriever()
-    chain = RAG_chain(llm).get_chain(retriever)
+    llm = GoogleGenerativeAI(model='gemini-1.5-flash-latest')
+    retriever = vector_store.get_retriever(k=20)
+    reranker = CohereRerank(cohere_api_key=os.getenv('COHERE_API_KEY'),
+                            model='rerank-multilingual-v3.0',
+                            top_n=5)
+    chain = RAG_chain(llm=llm,
+                      retriever=retriever,
+                      reranker=reranker)
 
     user_input = None
     while True:
@@ -40,5 +44,7 @@ def main():
             break
         print(chain.invoke(user_input))
 
+
 if __name__ == '__main__':
+    load_dotenv()
     main()

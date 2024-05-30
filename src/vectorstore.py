@@ -34,18 +34,22 @@ class _IndexingConfig_:
 class VectorStore(_IndexingConfig_):
     def __init__(self,
                  embedding_function: Embeddings,
+                 relevant_score: str = 'cosine',
                  collection_name: str = 'vectorstore'):
         super().__init__(collection_name)
 
         # TODO: Modify database (maybe cloud storage) for scaling
         self.embedding = embedding_function
-        self.vector_db = Chroma(embedding_function=self.embedding, persist_directory=self.db_dir)
+        self.collection_metadata = {'hnsw:space': relevant_score}
+        self.vector_db = Chroma(embedding_function=self.embedding,
+                                persist_directory=self.db_dir,
+                                collection_metadata=self.collection_metadata)
 
     def indexing(self, documents, source_id_key, cleanup='full'):
         super().indexing(documents, self.vector_db, source_id_key, cleanup)
 
-    def get_retriever(self):
-        return self.vector_db.as_retriever()
+    def get_retriever(self, k=5):
+        return self.vector_db.as_retriever(search_kwargs={'k': k})
 
     def get_db(self):
         return self.vector_db

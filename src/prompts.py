@@ -12,6 +12,19 @@ Context: {context}
 <|eot_id|><|start_header_id|>assistant<|end_header_id|>"""
 
 
+ADMISSION_CONSULTANT_PROMPT = """\
+You are an admission assistant for at Ho Chi Minh City University of Science, Vietnam. \
+Use the following pieces of retrieved-context to answer the question relevant to this university. \
+If the retrieved context doesn't contain the necessary information to answer the user question, \
+just say that you don't know.
+Moreover, the retrieved context is almost written in Vietnamese, but you have to reply in the language by which the user has \
+used to ask you. Your answer has to be consistent about language.
+
+Question: {question}
+Context: {context}
+"""
+
+
 IMAGE_EXTRACTOR_PROMPT = """Scan over and detect what is in this image. 
 Then, if image doesn't contain any kind of data (e.g. text, table), return "nothing" exactly. \
 Otherwise, if the image only contains text, parse and return the most meaningful text because text in a image \
