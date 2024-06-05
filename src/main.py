@@ -6,12 +6,12 @@ from langchain_google_genai import GoogleGenerativeAI
 from langchain_cohere import CohereRerank
 
 from vectorstore import VectorStore
-from rag_chain import RAG_chain
+from rag_chain import RAG_Chain
 from utils import json_to_documents, get_device
 
 
 def main():
-    # get data
+    # get test_data
     docs = json_to_documents('scraper/tmp_docs.json')
 
     # chunking
@@ -25,7 +25,7 @@ def main():
 
     # load into db
     vector_store = VectorStore(embedding)
-    vector_store.indexing(chunks, source_id_key='source')
+    vector_store.index(chunks, source_id_key='source')
 
     # create chain
     llm = GoogleGenerativeAI(model='gemini-1.5-flash-latest')
@@ -33,7 +33,7 @@ def main():
     reranker = CohereRerank(cohere_api_key=os.getenv('COHERE_API_KEY'),
                             model='rerank-multilingual-v3.0',
                             top_n=5)
-    chain = RAG_chain(llm=llm,
+    chain = RAG_Chain(llm=llm,
                       retriever=retriever,
                       reranker=reranker)
 

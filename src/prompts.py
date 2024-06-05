@@ -26,22 +26,22 @@ Context: {context}
 
 
 IMAGE_EXTRACTOR_PROMPT = """Scan over and detect what is in this image. 
-Then, if image doesn't contain any kind of data (e.g. text, table), return "nothing" exactly. \
+Then, if image doesn't contain any kind of test_data (e.g. text, table), return "nothing" exactly. \
 Otherwise, if the image only contains text, parse and return the most meaningful text because text in a image \
 may be stylized (such as rotate text, big and small character, row-by-row character) to make it more attractive.\
 Notice that just parse the text and skip all other objects.
 Finally, if the image have only either table or both of text and table, parse it and return in the most accurate, \
-human-readable, and data - integrity way."""
+human-readable, and test_data - integrity way."""
 
 
 BACKUP_IMAGE_EXTRACTOR_PROMPT_2 = """
 Scan over and detect what is in this image. 
-Then, if image doesn't contain any kind of data (e.g. text, table), return "nothing" exactly. \
+Then, if image doesn't contain any kind of test_data (e.g. text, table), return "nothing" exactly. \
 Otherwise, if the image only contains text, parse and return the most meaningful text because text in a image \
 may be stylized (such as rotate text, big and small character, row-by-row character) to make it more attractive.\
 Notice that just parse the text and skip all other objects.
 Finally, if the image have only either table or both of text and table, parse it and return in the most accurate, \
-human-readable, and data - integrity way.
+human-readable, and test_data - integrity way.
 For example: an image has a title is text and a table could be parsed like following
 TRƯỜNG ĐẠI HỌC KHOA HỌC TỰ NHIÊN
 Điểm chuẩn các phương thức xét tuyển năm 2023
@@ -62,12 +62,12 @@ Lĩnh vực khoa học sự sống
 
 BACKUP_IMAGE_EXTRACTOR_PROMPT_1 = """
 Scan over and detect what is in this image. 
-Then, if image doesn't contain any kind of data (e.g. text, table), return "nothing" exactly. \
+Then, if image doesn't contain any kind of test_data (e.g. text, table), return "nothing" exactly. \
 Otherwise, if the image only contains text, parse and return the most meaningful text because text in a image \
 may be stylized (such as rotate text, big and small charater, row-by-row character) to make it more attractive.\
 Notice that just parse the text and skip all other objects.
 Finally, if the image have only either table or both of text and table, parse it and return in the most accurate, \
-human-readable, and data - integrity way.
+human-readable, and test_data - integrity way.
 For example: an image have content like following
 TRƯỜNG ĐẠI HỌC KHOA HỌC TỰ NHIÊN
 Điểm chuẩn các phương thức xét tuyển năm 2023

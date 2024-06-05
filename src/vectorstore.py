@@ -1,16 +1,14 @@
 # TODO: Initially, we will use a local vector database like Chroma but will switch if the program scales up.
 
 from langchain_chroma import Chroma
-from langchain_community.vectorstores import FAISS
-from langchain.indexes import index, SQLRecordManager
+from langchain.indexes import SQLRecordManager, index
 from langchain_core.embeddings.embeddings import Embeddings
-from langchain_core.vectorstores import VectorStore
 
 import os
-from typing import Union
+
 
 class _IndexingConfig_:
-    db_dir = '../database/'
+    db_dir = os.path.join(os.path.dirname(os.getcwd()), 'database')
 
     def __init__(self, collection_name: str = 'vectorstore'):
         self.record_manager_path = f'{self.db_dir}/{collection_name}.sql'
@@ -21,7 +19,7 @@ class _IndexingConfig_:
         if not os.path.exists(self.record_manager_path):
             self.record_manager.create_schema()
 
-    def indexing(self, documents, vectorstore, source_id_key, cleanup='full'):
+    def index(self, documents, vectorstore, source_id_key, cleanup='full'):
         index(
             docs_source=documents,
             vector_store=vectorstore,
@@ -45,8 +43,8 @@ class VectorStore(_IndexingConfig_):
                                 persist_directory=self.db_dir,
                                 collection_metadata=self.collection_metadata)
 
-    def indexing(self, documents, source_id_key, cleanup='full'):
-        super().indexing(documents, self.vector_db, source_id_key, cleanup)
+    def index(self, documents, source_id_key, cleanup='full'):
+        super().index(documents, self.vector_db, source_id_key, cleanup)
 
     def get_retriever(self, k=5):
         return self.vector_db.as_retriever(search_kwargs={'k': k})

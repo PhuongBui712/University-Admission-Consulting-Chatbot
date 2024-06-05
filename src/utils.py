@@ -23,6 +23,18 @@ def json_to_documents(path):
     return docs
 
 
+def write_json(path, items, ensure_ascii=False):
+    with open(path, 'w') as file:
+        json.dump(items, file, ensure_ascii=ensure_ascii, indent=4)
+
+
+def load_json(path):
+    with open(path, 'r', encoding='utf-8') as file:
+        result = json.load(file)
+
+    return result
+
+
 def get_device():
     device = 'cuda' if torch.cuda.is_available() else ('mps' if torch.backends.mps.is_available() else 'cpu')
 

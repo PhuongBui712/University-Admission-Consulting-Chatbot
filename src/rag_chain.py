@@ -10,7 +10,7 @@ from prompts import ADMISSION_CONSULTANT_PROMPT
 from typing import List
 
 
-class RAG_chain:
+class RAG_Chain:
     # TODO: RAG chain with multi-query (multi-retriever) for scaling
     def __init__(self, llm, 
                  retriever: VectorStoreRetriever, 
@@ -31,6 +31,7 @@ class RAG_chain:
         
         return result
 
+    @staticmethod
     def format_documents(self, documents: List[Document]):
         return '\n\n'.join([document.page_content for document in documents])
     
