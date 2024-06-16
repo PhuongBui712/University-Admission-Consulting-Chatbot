@@ -37,9 +37,10 @@ class GeminiImageExtractor:
     model_list = ['gemini-1.5-flash-latest',
                   'gemini-1.5-pro-latest']
 
-    def __init__(self, model_name='gemini-1.5-pro-latest'):
+    def __init__(self, model_name='gemini-1.5-pro-latest', custom_prompt=None):
         self.api = self._get_api()
         self.chat_model = ChatGoogleGenerativeAI(model=model_name, google_api_key=self.api)
+        self.prompt = custom_prompt or self.prompt
         self.text_content = {
             "type": "text",
             "text": self.prompt
@@ -60,7 +61,6 @@ class GeminiImageExtractor:
             result = self.chat_model.invoke([message])
             os.remove(image_content['image_url'])
 
-        sleep(sleep_time)
         return result.content
 
     def _tmp_save(self, url):
