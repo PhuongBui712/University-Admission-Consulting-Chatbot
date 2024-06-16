@@ -1,4 +1,6 @@
-import os
+import os, sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))) # append /backend path
+
 import shutil
 from time import sleep
 from urllib.parse import urlparse
@@ -9,7 +11,7 @@ from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage
 
-from backend.src.prompts import IMAGE_EXTRACTOR_PROMPT
+from src.prompts import IMAGE_EXTRACTOR_PROMPT
 
 
 load_dotenv()

@@ -1,4 +1,7 @@
-import os
+import os, sys
+sys.path.append(os.path.dirname(__file__))
+
+import base64
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse, quote
@@ -7,9 +10,15 @@ from langchain_core.documents import Document
 
 from image_extractor import GeminiImageExtractor, InvalidURL
 
+
 # List of common attachment file extensions
 ATTACHMENT_EXTENSIONS = {'.pdf', '.doc', '.docx', '.xls', '.xlsx', '.zip', '.rar',
                          '.7z', '.png', '.jpg', '.jpeg', '.gif', '.txt', '.ppt', '.pptx'}
+
+REQUEST_HEADER = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) \
+        AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'
+    }
 
 
 def is_subdirectory(href):
@@ -36,11 +45,7 @@ def preprocess_website(soup):
 
 
 def get_web_soup(url):
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) \
-        AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'
-    }
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, headers=REQUEST_HEADER)
     if response.status_code == 200:
         soup = BeautifulSoup(response.content, 'html.parser')
         return soup
@@ -60,6 +65,11 @@ def encode_url(url):
     return encoded_url
 
 
+def encode_image(image: bytes):
+    return base64.b64encode(image).decode('utf-8')
+
+
+
 def website_is_updated(url, hash_value):
     soup = get_web_soup(url)
     if soup:
@@ -67,6 +77,12 @@ def website_is_updated(url, hash_value):
         return sha256(main_soup.encode()).hexdigest() != hash_value
 
     raise Exception('Can not connect to destination URL')
+
+
+def get_title(soup):
+    title = soup.find('meta', {'property': 'og:title'}).get('content') or soup.title.get_text()
+
+    return title
 
 
 def get_links(soup, internal_link=True, external_link=False, attachment=True, start_url=None):
@@ -86,20 +102,35 @@ def get_links(soup, internal_link=True, external_link=False, attachment=True, st
     return links
 
 
+def get_images(url):
+    response = requests.get(url, headers=REQUEST_HEADER)
+    if not response.ok:
+        response.raise_for_status()
+
+    return response.content
+
+
 def parse_website_image(soup, extractor, start_url=None):
+    not_parsed_imgs = []
     for img in soup.find_all('img', src=True):
+        if img['src'].split('.')[-1] == 'gif':
+            continue
+
         url = img['src']
         if is_subdirectory(url):
             try:
                 url = start_url + url
             except:
-                raise InvalidURL
+                raise Exception("Can not access incomplete URL")
 
         parse_content = extractor.extract(url, sleep_time=1)
-        if not parse_content.startswith('nothing'):
+        if not parse_content.startswith('others'):
             img.insert_after(parse_content)
+        else:
+            base64_img = f'data:image/{url.split('.')[-1]};{encode_image(get_images(url))}'
+            not_parsed_imgs.append(base64_img)
 
-    return soup
+    return soup, not_parsed_imgs
 
 
 def parse_website_url(soup, start_url):
@@ -117,9 +148,10 @@ def parse_website(soup, parse_reference=True, parse_image=False, start_url=None)
         script.extract()
 
     # parse image
+    imgs = []
     if parse_image:
         image_extractor = GeminiImageExtractor(model_name='gemini-1.5-flash-latest')
-        soup = parse_website_image(soup, image_extractor, start_url=start_url)
+        soup, imgs = parse_website_image(soup, image_extractor, start_url=start_url)
 
     # parse references
     if parse_reference:
@@ -131,7 +163,7 @@ def parse_website(soup, parse_reference=True, parse_image=False, start_url=None)
     chunks = (phrase.strip() for line in lines for phrase in line.split('  '))
     text = '\n'.join(chunk for chunk in chunks if chunk)
 
-    return text
+    return text, imgs
 
 
 def webpage_to_documents(url, page_content, title):

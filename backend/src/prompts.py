@@ -33,9 +33,88 @@ Context: {context}
 Question: {question}
 """
 
+# Image extractor prompts
+IMAGE_EXTRACTOR_PROMPT_5 = """You are given an image as input. Your task is to parse the image based on the following criteria:
 
-IMAGE_EXTRACTOR_PROMPT = """Scan over and detect what is in this image. 
-Then, if image doesn't contain any kind of test_data (e.g. text, table), return "nothing" exactly. \
+1. If the image contains text or a table:
+  - Parse the text or table (or both of them), even if it is stylized (e.g., rotated, varying font sizes, row-by-row characters) to make it more attractive.
+  - Return the most meaningful text or table content.
+  - The parsed table should be formatted as the example 1.
+
+2. If the image contains any other kind of data (diagrams, graphs, etc.) or doesn't contain any kind of data.
+  - Return the string "other".
+
+Example 1 (Image containing a table or text ):
+Input Image:
+[Image contain a string "Điểm chuẩn" and a table]
+
+Expected Output:
+Điểm chuẩn
+|----------|-------------------|-----------------------------------------------------------------------|-------|-------|-------|
+| Mã ngành | Ngành, nhóm ngành | PTXT2                                                                 | PTXT3 | PTXT4 | PTXT6 |
+|          |                   |-----------------------------------------------------------------------|       |       |       |
+|          |                   | Ưu tiên xét tuyển thẳng (ĐHQG - HCM) | Ưu tiên xét tuyển (ĐHQG - HCM) |       |       |       |
+|----------|-------------------|-----------------------------------------------------------------------|-------|-------|-------|
+|12342     | Hải dương học     |  8.90                                |  8.39                          | 19.00 | 600   |   -   |
+|----------|-------------------|-----------------------------------------------------------------------|-------|-------|-------|
+
+Example 2 (Image containing a diagram):
+Input Image:
+[An image containing a diagram or graph]
+
+Expected Output:
+others
+
+Example 3 (Image without any data):
+Input Image:
+[An image without any data, text, or tabular information]
+
+Expected Output:
+others
+
+Please provide the parsed text, table, or the appropriate string based on the input image."""
+
+
+IMAGE_EXTRACTOR_PROMPT = """You will be given an image as input. Your task is to analyze the image and follow these instructions:
+
+1. If the image contains only text, parse the text and return the most meaningful text content. The text in the image may be stylized \
+(e.g., rotated, varying font sizes, row-by-row characters) to make it more visually appealing. Your goal is to extract the meaningful \
+text content while ignoring any stylistic elements.
+
+2. If the image contains any kind of data such as tables, diagrams, graphs, or charts, or does not contain any meaningful \
+text or data, return the string "others".
+
+Here are some examples:
+
+Example 1 (Image containing stylized text):
+[Insert image of stylized text, e.g., text with varying font sizes and orientations - "Hello World"]
+Expected output: "Hello World"
+
+Example 2 (Image containing a table):
+[Insert image containing a data table]
+Expected output: "others"
+
+Example 3 (Image containing a graph):
+[Insert image containing a graph or chart]
+Expected output: "others"
+
+Example 4 (Image without any text or data):
+[Insert image without any meaningful content, e.g., a solid color or abstract pattern]
+Expected output: "others"
+
+Your response should be a string containing either the parsed meaningful text content or the string "nothing" based on the instructions above."""
+
+
+IMAGE_EXTRACTOR_PROMPT_4 = """Scan over and detect what is in this image. 
+Then, if image doesn't contain any kind of data (e.g. text, table), return "nothing" exactly. \
+Otherwise, if the image only contains text, parse and return the most meaningful text because text in a image \
+may be stylized (such as rotate text, big and small character, row-by-row character) to make it more attractive.\
+Notice that just parse the text and skip all other objects.
+Finally, if the image have only either table or both of text and table, return "nothing" too."""
+
+
+IMAGE_EXTRACTOR_PROMPT_3 = """Scan over and detect what is in this image. 
+Then, if image doesn't contain any kind of data (e.g. text, table), return "nothing" exactly. \
 Otherwise, if the image only contains text, parse and return the most meaningful text because text in a image \
 may be stylized (such as rotate text, big and small character, row-by-row character) to make it more attractive.\
 Notice that just parse the text and skip all other objects.
@@ -43,7 +122,7 @@ Finally, if the image have only either table or both of text and table, parse it
 human-readable, and test_data - integrity way."""
 
 
-BACKUP_IMAGE_EXTRACTOR_PROMPT_2 = """
+IMAGE_EXTRACTOR_PROMPT_2 = """
 Scan over and detect what is in this image. 
 Then, if image doesn't contain any kind of test_data (e.g. text, table), return "nothing" exactly. \
 Otherwise, if the image only contains text, parse and return the most meaningful text because text in a image \
@@ -69,7 +148,7 @@ Lĩnh vực khoa học sự sống
 """
 
 
-BACKUP_IMAGE_EXTRACTOR_PROMPT_1 = """
+IMAGE_EXTRACTOR_PROMPT_1 = """
 Scan over and detect what is in this image. 
 Then, if image doesn't contain any kind of test_data (e.g. text, table), return "nothing" exactly. \
 Otherwise, if the image only contains text, parse and return the most meaningful text because text in a image \
@@ -117,4 +196,24 @@ II. Lĩnh vực khoa học sự sống
     - PTXT4: 650
     - PTXT6: không có
 ------------------------------End Table------------------------------
+"""
+
+
+# Summarize prompt
+TEXT_SUMMARIZE_PROMPT = """You are an assistant tasked with summarizing tables and texts for retrieval. \
+These summaries will be embedded and used to retrieve the raw text or table elements.
+
+Your task is to provide a concise summary of the given table or text in the same language as the input. \
+The summary should be well-optimized for retrieval purposes, capturing the essential information while being concise and relevant.
+
+Table or text: {input}
+"""
+
+
+IMAGE_SUMMARIZE_PROMPT = """You are an assistant tasked with summarizing images for retrieval. \
+These summaries will be embedded and used to retrieve the raw image. \
+Give a concise summary of the image that is well optimized for retrieval.
+If it's a table, extract all elements of the table.
+If it's a graph, explain the findings in the graph.
+Do not include any numbers that are not mentioned in the image.
 """

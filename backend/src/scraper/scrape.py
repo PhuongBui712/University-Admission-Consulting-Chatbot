@@ -1,13 +1,13 @@
-import os.path
+# TODO: parse html table
+import os, sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+
 from datetime import datetime
 from hashlib import sha256
 from urllib.parse import urlparse
 
-import sys
-sys.path.append(os.path.abspath(os.path.dirname(__file__)))
-
 import utils
-from backend.src.utils import load_json, write_json
+from src.utils import load_json, write_json
 
 
 def crawl_webpage(url, parse_reference=True, parse_image=False, hash=False):
@@ -35,10 +35,12 @@ def crawl_webpage(url, parse_reference=True, parse_image=False, hash=False):
                                               start_url=start_url))
 
         # parse content
-        main_content = utils.parse_website(main_soup, parse_reference, parse_image, start_url)
-        page_content = (main_content, soup.title.string)
+        main_content, images = utils.parse_website(main_soup, parse_reference, parse_image, start_url)
+        page_content = (main_content, utils.get_title(soup))
 
-    return page_content, reference_urls, hash_value
+        return page_content, images, reference_urls, hash_value
+    
+    return None
 
 
 def crawl():
@@ -125,6 +127,3 @@ def crawl():
         write_json(sitemap_path, storage_urls)
 
         return documents
-
-
-crawl()

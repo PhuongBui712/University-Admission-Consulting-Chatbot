@@ -1,9 +1,4 @@
-# TODO:
-#  - Current: only get raw text from website
-#  - Future work:
-#       + Load pdf, scanned pdf, page with infographic
-#       + Customize craper
-#       + Schedule scraper with airflow
+# This is the first crawling strategy of the chatbot and no longer developed
 
 
 from langchain_community.utilities import ApifyWrapper
