@@ -127,7 +127,7 @@ def parse_website_image(soup, extractor, start_url=None):
         if not parse_content.startswith('others'):
             img.insert_after(parse_content)
         else:
-            base64_img = f'data:image/{url.split('.')[-1]};{encode_image(get_images(url))}'
+            base64_img = f'data:image/{url.split('.')[-1]};base64,{encode_image(get_images(url))}'
             not_parsed_imgs.append(base64_img)
 
     return soup, not_parsed_imgs

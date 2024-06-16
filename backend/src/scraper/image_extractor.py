@@ -46,17 +46,17 @@ class GeminiImageExtractor:
             "text": self.prompt
         }
 
-    def extract(self, image_path, sleep_time=0):
+    def extract(self, image: str, sleep_time=0): # TODO: Delete sleep time
         image_content = {
             "type": "image_url",
-            "image_url": image_path
+            "image_url": image
         }
         message = HumanMessage(content=[self.text_content, image_content])
 
         try:
             result = self.chat_model.invoke([message])
         except:
-            image_content['image_url'] = self._tmp_save(image_path)
+            image_content['image_url'] = self._tmp_save(image)
             message = HumanMessage(content=[self.text_content, image_content])
             result = self.chat_model.invoke([message])
             os.remove(image_content['image_url'])
