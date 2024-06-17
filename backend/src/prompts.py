@@ -199,6 +199,36 @@ II. Lĩnh vực khoa học sự sống
 """
 
 
+# Chunking prompt
+CHUNKING_PROMPT = """You are given a text document. Your task is to split the document into chunks, where each chunk corresponds to a section of the document. If a section has more than 1000 tokens, you should split that section into multiple chunks, ensuring that each chunk contains a cluster of paragraphs that are relevant to each other. The output should be a list of strings, where each string represents a chunk.
+Here's an example document:
+
+Title: The History of Artificial Intelligence
+
+Section 1: Introduction
+Paragraph 1: Artificial Intelligence (AI) is a rapidly evolving field that has captivated the imagination of scientists, researchers, and the general public alike. From its humble beginnings in the mid-20th century to its current state as a driving force behind technological advancements, AI has come a long way. This introductory section will provide an overview of the field and set the stage for the subsequent sections.
+
+Paragraph 2: AI can be broadly defined as the simulation of human intelligence processes by machines, particularly computer systems. These processes include learning, reasoning, problem-solving, perception, and language understanding. The ultimate goal of AI is to create intelligent machines that can perform tasks that typically require human intelligence.
+
+Section 2: Early Developments
+Paragraph 1: The concept of AI can be traced back to ancient Greek mythology, where stories of self-moving machines and artificial beings were prevalent. However, the modern foundations of AI were laid in the 1950s by pioneers such as Alan Turing, John McCarthy, and Marvin Minsky. Turing's famous paper, "Computing Machinery and Intelligence," published in 1950, proposed the idea of a machine that could learn and reason like humans.
+
+... (more paragraphs and sections follow)
+
+The expected output for this example would be a list of strings, where each string represents a chunk of the document, like this:
+[
+    "Title: The History of Artificial Intelligence\n\nSection 1: Introduction\nParagraph 1: Artificial Intelligence (AI) is a rapidly evolving field that has captivated the imagination of scientists, researchers, and the general public alike. From its humble beginnings in the mid-20th century to its current state as a driving force behind technological advancements, AI has come a long way. This introductory section will provide an overview of the field and set the stage for the subsequent sections.\n\nParagraph 2: AI can be broadly defined as the simulation of human intelligence processes by machines, particularly computer systems. These processes include learning, reasoning, problem-solving, perception, and language understanding. The ultimate goal of AI is to create intelligent machines that can perform tasks that typically require human intelligence.",
+    "Section 2: Early Developments\nParagraph 1: The concept of AI can be traced back to ancient Greek mythology, where stories of self-moving machines and artificial beings were prevalent. However, the modern foundations of AI were laid in the 1950s by pioneers such as Alan Turing, John McCarthy, and Marvin Minsky. Turing's famous paper, "Computing Machinery and Intelligence," published in 1950, proposed the idea of a machine that could learn and reason like humans.",
+    ... (more chunks follow)
+]
+
+Note: The actual output will depend on the content and structure of the input document, as well as the token limit specified (in this case, 1000 tokens per chunk).
+
+Split the following document:
+{input}
+"""
+
+
 # Summarize prompt
 TEXT_SUMMARIZE_PROMPT = """You are an assistant tasked with summarizing tables and texts for retrieval. \
 These summaries will be embedded and used to retrieve the raw text or table elements.
@@ -211,9 +241,13 @@ Table or text: {input}
 
 
 IMAGE_SUMMARIZE_PROMPT = """You are an assistant tasked with summarizing images for retrieval. \
-These summaries will be embedded and used to retrieve the raw image. \
-Give a concise summary of the image that is well optimized for retrieval.
-If it's a table, extract all elements of the table.
-If it's a graph, explain the findings in the graph.
-Do not include any numbers that are not mentioned in the image.
-"""
+These summaries will be embedded and used to retrieve the raw image. 
+
+Your task is to provide a concise summary of the given image in the same language as the text or data present in the image. \
+The summary should be well-optimized for retrieval purposes, capturing the essential information while being concise and relevant.
+
+If the image contains a table, extract all elements of the table and present them in a structured format (e.g., a Markdown table).
+If the image contains a graph, explain the findings or trends depicted in the graph, using the same language as any text present in the image.
+Do not include any numbers or numerical values that are not explicitly mentioned or shown in the image.
+
+Maintain the same language throughout the summary as the language used in the image content (text, labels, etc.)."""
