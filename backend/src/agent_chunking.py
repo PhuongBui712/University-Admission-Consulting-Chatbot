@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from langchain_core.documents import Document
 from langchain_core.prompts import PromptTemplate
 from langchain_google_genai.llms import GoogleGenerativeAI
-from prompts import CHUNKING_PROMPT
+from src.prompts import CHUNKING_PROMPT
 
 
 class Chunks(BaseModel):
