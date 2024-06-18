@@ -41,11 +41,12 @@ class GeminiChunker:
             
         return chunks
     
-    def _parse_result(self, result):
-        match = re.search(r'\[.*\]', result, re.DOTALL)
-
-        parsed_chunks = match.group(0)
-        parsed_chunks = ast.literal_eval(parsed_chunks)
-
-        return parsed_chunks
+    def _parse_result(self, text):
+        if text.startswith('```python'):
+            parsed_text = text[11:-4]
+        else:
+            parsed_text = text[6:-4]
+        
+        parsed_text = parsed_text.strip().split(',\n    ')
+        return parsed_text
     
