@@ -5,7 +5,7 @@ from src.gemini_config import GeminiConfig
 
 class GeminiEmbedding(GeminiConfig):
     def __init__(self):
-        super().__init__(model='models/embedding-004') # TODO: optimize with `task_type` arguemnt
+        super().__init__(model_type='embedding') # TODO: optimize with `task_type` arguemnt
     
     def embed_query(self, query: str):
         return self.model.embed_query(query)

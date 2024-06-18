@@ -1,12 +1,55 @@
 {
-  "base_url": {
-    "https://tuyensinh.hcmus.edu.vn/th%C3%B4ng-tin-tuy%E1%BB%83n-sinh-%C4%91%E1%BA%A1i-h%E1%BB%8Dc": {},
-    "https://tuyensinh.hcmus.edu.vn/th%C3%B4ng-tin-tuy%E1%BB%83n-sinh/ng%C3%A0nh-%C4%91%C3%A0o-t%E1%BA%A1o/ng%C3%A0nh-%C4%91%C3%A0o-t%E1%BA%A1o-%C4%91%E1%BA%A1i-h%E1%BB%8Dc-ch%C3%ADnh-quy": {},
-    "https://tuyensinh.hcmus.edu.vn/th%C3%B4ng-tin-tuy%E1%BB%83n-sinh/ng%C3%A0nh-%C4%91%C3%A0o-t%E1%BA%A1o/ch%C6%B0%C6%A1ng-tr%C3%ACnh-%C4%91%C3%A0o-t%E1%BA%A1o-theo-%C4%91%E1%BB%81-%C3%A1n": {},
-    "https://tuyensinh.hcmus.edu.vn/th%C3%B4ng-tin-tuy%E1%BB%83n-sinh/phuongthuctuyensinh": {},
-    "https://tuyensinh.hcmus.edu.vn/th%C3%B4ng-tin-tuy%E1%BB%83n-sinh/%C4%91i%E1%BB%83m-chu%E1%BA%A9n-h%C3%A0ng-n%C4%83m": {},
-    "https://tuyensinh.hcmus.edu.vn/thongtinnhaphoc": {},
-    "https://tuyensinh.hcmus.edu.vn/c%C3%A2u-h%E1%BB%8Fi-th%C6%B0%E1%BB%9Dng-g%E1%BA%B7p": {}
-  },
-  "article_url": {}
+    "base_url": {
+        "https://tuyensinh.hcmus.edu.vn/th%C3%B4ng-tin-tuy%E1%BB%83n-sinh-%C4%91%E1%BA%A1i-h%E1%BB%8Dc": {
+            "hash_value": "f9faacd081833b0798f9949fc35f31984992f13c80f6b0d411c754cb78b2885d"
+        },
+        "https://tuyensinh.hcmus.edu.vn/th%C3%B4ng-tin-tuy%E1%BB%83n-sinh/ng%C3%A0nh-%C4%91%C3%A0o-t%E1%BA%A1o/ng%C3%A0nh-%C4%91%C3%A0o-t%E1%BA%A1o-%C4%91%E1%BA%A1i-h%E1%BB%8Dc-ch%C3%ADnh-quy": {
+            "hash_value": "d7f0792c7ebf03125f68d4a1edc4f6da676816683448e733ffbaff90af841539"
+        },
+        "https://tuyensinh.hcmus.edu.vn/th%C3%B4ng-tin-tuy%E1%BB%83n-sinh/ng%C3%A0nh-%C4%91%C3%A0o-t%E1%BA%A1o/ch%C6%B0%C6%A1ng-tr%C3%ACnh-%C4%91%C3%A0o-t%E1%BA%A1o-theo-%C4%91%E1%BB%81-%C3%A1n": {
+            "hash_value": "2564f281f6ab7c3850db7acf425592b01fdba839e540753cb08adc65c61baaf5"
+        },
+        "https://tuyensinh.hcmus.edu.vn/th%C3%B4ng-tin-tuy%E1%BB%83n-sinh/phuongthuctuyensinh": {
+            "hash_value": "0a91de6744fe14d151d4213a705ead71fd536d7cac3808b6ae9235f307c339a7"
+        },
+        "https://tuyensinh.hcmus.edu.vn/th%C3%B4ng-tin-tuy%E1%BB%83n-sinh/%C4%91i%E1%BB%83m-chu%E1%BA%A9n-h%C3%A0ng-n%C4%83m": {
+            "hash_value": "769d0ab590385cb2ed31b7893f99f1deafdc0cd4645612e062022cb04ab324ee"
+        },
+        "https://tuyensinh.hcmus.edu.vn/thongtinnhaphoc": {
+            "hash_value": "e12ef60191e14f992b5882e9714df110958cb3128237841ab0d24919ad76a4d6"
+        },
+        "https://tuyensinh.hcmus.edu.vn/c%C3%A2u-h%E1%BB%8Fi-th%C6%B0%E1%BB%9Dng-g%E1%BA%B7p": {
+            "hash_value": "89ec2f030a58640ee02e562436b10b6a586c9a2956ec07e235cf5760c18d274f"
+        }
+    },
+    "article_url": {
+        "https://tuyensinh.hcmus.edu.vn/component/content/article/8-th%C3%B4ng-tin-tuy%E1%BB%83n-sinh/140-th%C3%B4ng-b%C3%A1o-ph%C6%B0%C6%A1ng-th%E1%BB%A9c-x%C3%A9t-tuy%E1%BB%83n-5-x%C3%A9t-tuy%E1%BB%83n-v%C3%A0o-%C4%91%E1%BA%A1i-h%E1%BB%8Dc-h%E1%BB%87-ch%C3%ADnh-quy-n%C4%83m-2024-b%E1%BA%B1ng-ph%C6%B0%C6%A1ng-th%E1%BB%A9c-d%E1%BB%B1a-tr%C3%AAn-k%E1%BA%BFt-qu%E1%BA%A3-h%E1%BB%8Dc-t%E1%BA%ADp-c%E1%BB%A7a-ch%C6%B0%C6%A1ng-tr%C3%ACnh-thpt-qu%E1%BB%91c-t%E1%BA%BF-%C4%91%E1%BB%91i-v%E1%BB%9Bi-th%C3%AD-sinh-ng%C6%B0%E1%BB%9Di-n%C6%B0%E1%BB%9Bc-ngo%C3%A0i-v%C3%A0-th%C3%AD-sinh-ng%C6%B0%E1%BB%9Di-vi%E1%BB%87t-nam-h%E1%BB%8Dc-tr%C6%B0%E1%BB%9Dng-n%C6%B0%E1%BB%9Bc-ngo%C3%A0i": {
+            "release_date": "06-05-2024",
+            "hash_value": "de58461a0a6f56d62407e5390b2d203d2e7ced20679a591845542c306c4f3c43"
+        },
+        "https://tuyensinh.hcmus.edu.vn/component/content/article/8-th%C3%B4ng-tin-tuy%E1%BB%83n-sinh/137-th%C3%B4ng-b%C3%A1o-ph%C6%B0%C6%A1ng-th%E1%BB%A9c-x%C3%A9t-tuy%E1%BB%83n-1-x%C3%A9t-tuy%E1%BB%83n-th%E1%BA%B3ng-v%C3%A0-%C6%B0u-ti%C3%AAn-x%C3%A9t-tuy%E1%BB%83n-v%C3%A0o-%C4%91%E1%BA%A1i-h%E1%BB%8Dc-h%E1%BB%87-ch%C3%ADnh-quy-n%C4%83m-2024-theo-quy-%C4%91%E1%BB%8Bnh-c%E1%BB%A7a-b%E1%BB%99-gi%C3%A1o-d%E1%BB%A5c-v%C3%A0-%C4%91%C3%A0o-t%E1%BA%A1o": {
+            "release_date": "06-05-2024",
+            "hash_value": "28fcfedf76cbe22414f932767e908a253ed89994b0ef76043a356ffe3f8d5f2c"
+        },
+        "https://tuyensinh.hcmus.edu.vn/component/content/article/8-th%C3%B4ng-tin-tuy%E1%BB%83n-sinh/141-th%C3%B4ng-b%C3%A1o-ph%C6%B0%C6%A1ng-th%E1%BB%A9c-x%C3%A9t-tuy%E1%BB%83n-6-x%C3%A9t-tuy%E1%BB%83n-v%C3%A0o-%C4%91%E1%BA%A1i-h%E1%BB%8Dc-h%E1%BB%87-ch%C3%ADnh-quy-n%C4%83m-2024-%C4%91%E1%BB%91i-v%E1%BB%9Bi-ch%C6%B0%C6%A1ng-tr%C3%ACnh-ti%C3%AAn-ti%E1%BA%BFn-v%C3%A0-ch%C6%B0%C6%A1ng-tr%C3%ACnh-%C4%91%E1%BA%A1t-chu%E1%BA%A9n-ki%E1%BB%83m-%C4%91%E1%BB%8Bnh-b%E1%BA%B1ng-ph%C6%B0%C6%A1ng-th%E1%BB%A9c-d%E1%BB%B1a-tr%C3%AAn-k%E1%BA%BFt-qu%E1%BA%A3-c%C3%A1c-ch%E1%BB%A9ng-ch%E1%BB%89-ngo%E1%BA%A1i-ng%E1%BB%AF-qu%E1%BB%91c-t%E1%BA%BF-k%E1%BA%BFt-h%E1%BB%A3p-v%E1%BB%9Bi-k%E1%BA%BFt-qu%E1%BA%A3-h%E1%BB%8Dc-t%E1%BA%ADp-thpt": {
+            "release_date": "06-05-2024",
+            "hash_value": "330309bd143c9a21d8b9e416e930e7045f874afafed1fb44db555bbec509cdcd"
+        },
+        "https://tuyensinh.hcmus.edu.vn/component/content/article/8-th%C3%B4ng-tin-tuy%E1%BB%83n-sinh/136-tr%C6%B0%E1%BB%9Dng-%C4%91%E1%BA%A1i-h%E1%BB%8Dc-khoa-h%E1%BB%8Dc-t%E1%BB%B1-nhi%C3%AAn%2C-%C4%91hqg-hcm-d%E1%BB%B1-ki%E1%BA%BFn-m%E1%BB%9F-th%C3%AAm-ng%C3%A0nh-m%E1%BB%9Bi%2C-t%C4%83ng-ch%E1%BB%89-ti%C3%AAu-tuy%E1%BB%83n-sinh-n%C4%83m-2024": {
+            "release_date": "13-02-2024",
+            "hash_value": "ce524e7b0ba1cc8479dcf893299c1e461126e138843f629774a681dbda8369d0"
+        },
+        "https://tuyensinh.hcmus.edu.vn/component/content/article/8-th%C3%B4ng-tin-tuy%E1%BB%83n-sinh/139-th%C3%B4ng-b%C3%A1o-ph%C6%B0%C6%A1ng-th%E1%BB%A9c-x%C3%A9t-tuy%E1%BB%83n-4-x%C3%A9t-tuy%E1%BB%83n-%C4%91%E1%BA%A1i-h%E1%BB%8Dc-h%E1%BB%87-ch%C3%ADnh-quy-d%E1%BB%B1a-tr%C3%AAn-k%E1%BA%BFt-qu%E1%BA%A3-k%E1%BB%B3-thi-%C4%91%C3%A1nh-gi%C3%A1-n%C4%83ng-l%E1%BB%B1c-do-%C4%91%E1%BA%A1i-h%E1%BB%8Dc-qu%E1%BB%91c-gia-th%C3%A0nh-ph%E1%BB%91-h%E1%BB%93-ch%C3%AD-minh-t%E1%BB%95-ch%E1%BB%A9c-n%C4%83m-2024": {
+            "release_date": "06-05-2024",
+            "hash_value": "3265631995bfcf1a7d59daaabd12de0d61307a105655aff8496d6af7fb013cf1"
+        },
+        "https://tuyensinh.hcmus.edu.vn/component/content/article/8-th%C3%B4ng-tin-tuy%E1%BB%83n-sinh/142-%C4%91%E1%BB%81-%C3%A1n-tuy%E1%BB%83n-sinh-tr%C3%ACnh-%C4%91%E1%BB%99-%C4%91%E1%BA%A1i-h%E1%BB%8Dc-n%C4%83m-2024": {
+            "release_date": "06-05-2024",
+            "hash_value": "93b86bd1c7148f43c421ee8f59add007d14211cb930ba5c28d955390d612e9c8"
+        },
+        "https://tuyensinh.hcmus.edu.vn/component/content/article/8-th%C3%B4ng-tin-tuy%E1%BB%83n-sinh/138-th%C3%B4ng-b%C3%A1o-ph%C6%B0%C6%A1ng-th%E1%BB%A9c-x%C3%A9t-tuy%E1%BB%83n-2-%C6%B0u-ti%C3%AAn-x%C3%A9t-tuy%E1%BB%83n-th%E1%BA%B3ng-v%C3%A0-%C6%B0u-ti%C3%AAn-x%C3%A9t-tuy%E1%BB%83n-v%C3%A0o-%C4%91%E1%BA%A1i-h%E1%BB%8Dc-h%E1%BB%87-ch%C3%ADnh-quy-n%C4%83m-2024-theo-quy-%C4%91%E1%BB%8Bnh-c%E1%BB%A7a-%C4%91%E1%BA%A1i-h%E1%BB%8Dc-qu%E1%BB%91c-gia-th%C3%A0nh-ph%E1%BB%91-h%E1%BB%93-ch%C3%AD-minh": {
+            "release_date": "06-05-2024",
+            "hash_value": "57512ac0fc3d523bbb52c9db05399febca3fad4d34d615f3edeef47d0820278f"
+        }
+    }
 }
