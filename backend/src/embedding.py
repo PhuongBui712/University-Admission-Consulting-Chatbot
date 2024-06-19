@@ -19,10 +19,9 @@ class GeminiEmbedding(GeminiConfig):
 
     
     def embed_documents(self, documents: List[Document]):
-        self._increment_counter(self.batch_size)
-
-        texts = [doc.page_content for doc in documents]
-        titles = [doc.metadata['title'] for doc in documents]
+        texts = [doc.page_content if isinstance(doc, Document) else doc for doc in documents]
+        titles = [doc.metadata.get('title', None) if isinstance(doc, Document) else None for doc in documents]
         
-        embeddings = self.model.embed_documents(texts, title=titles, batch_size=self.batch_size)
+        self._increment_counter(self.batch_size)
+        embeddings = self.model.embed_documents(texts, titles=titles, batch_size=self.batch_size)
         return embeddings

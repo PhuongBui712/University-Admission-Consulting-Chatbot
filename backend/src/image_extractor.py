@@ -5,8 +5,7 @@ import base64
 import requests
 from urllib.parse import urlparse
 from dotenv import load_dotenv
-
-from langchain_google_genai import ChatGoogleGenerativeAI
+from typing import List
 from langchain_core.messages import HumanMessage
 
 from prompts import IMAGE_EXTRACTOR_PROMPT
@@ -29,7 +28,7 @@ class GeminiImageExtractor(GeminiConfig):
             "text": self.prompt
         }
 
-    def extract(self, image_path: str):
+    def invoke(self, image_path: str):
         image_content = {'type': 'image_url'}
         if self._is_url(image_path):
             parsed_url = urlparse(image_path)

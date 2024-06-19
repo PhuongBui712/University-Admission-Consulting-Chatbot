@@ -121,7 +121,7 @@ def parse_website_image(soup, extractor, start_url=None):
             except:
                 raise Exception("Can not access incomplete URL")
 
-        parse_content = extractor.extract(url)
+        parse_content = extractor.invoke(url)
         if not parse_content.startswith('others'):
             img.insert_after(parse_content)
         else:
@@ -142,7 +142,7 @@ def parse_website_url(soup, start_url):
 def parse_website(soup, parse_reference=True, parse_image=False, start_url=None):
     # kill all script and style elements
     for script in soup(['script', 'style']):
-        script.extract()
+        script.invoke()
 
     # parse image
     imgs = []
