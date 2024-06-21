@@ -28,7 +28,7 @@ splitter = RecursiveCharacterTextSplitter(
     chunk_size=1024,
     chunk_overlap=256
 )
-chunks = splitter.split_documents(docs)reareate
+chunks = splitter.split_documents(docs)
 
 # load into db
 embedding = HuggingFaceEmbeddings(

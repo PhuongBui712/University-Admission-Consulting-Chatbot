@@ -124,7 +124,7 @@ def parse_website_image(soup, extractor, start_url=None):
         parse_content = extractor.invoke(url)
         if not parse_content.startswith('others'):
             img.insert_after(parse_content)
-        else:
+        elif not parse_content.startswith('nothing'):
             not_parsed_imgs.append(url)
 
     return soup, not_parsed_imgs
@@ -142,7 +142,7 @@ def parse_website_url(soup, start_url):
 def parse_website(soup, parse_reference=True, parse_image=False, start_url=None):
     # kill all script and style elements
     for script in soup(['script', 'style']):
-        script.invoke()
+        script.decompose()
 
     # parse image
     imgs = []

@@ -1,19 +1,33 @@
 import os, sys
 sys.path.append(os.path.abspath(os.path.dirname(__file__))) # append src dir to path
 
+import re
 import base64
 import requests
 from urllib.parse import urlparse
 from dotenv import load_dotenv
-from typing import List
+from langchain_core.documents import Document
 from langchain_core.messages import HumanMessage
 
 from prompts import IMAGE_EXTRACTOR_PROMPT
 from scraper.utils import REQUEST_HEADER
 from gemini_config import GeminiConfig
+from utils import looks_like_base64
 
 
 load_dotenv()
+
+
+def get_image(image_path):
+    response = requests.get(image_path, headers=REQUEST_HEADER)
+    if not response.ok:
+        response.raise_for_status()
+
+    return response.content
+
+
+def encode_image(image: bytes):
+    return base64.b64encode(image).decode('utf-8')
 
 
 class GeminiImageExtractor(GeminiConfig):
@@ -33,7 +47,7 @@ class GeminiImageExtractor(GeminiConfig):
         if self._is_url(image_path):
             parsed_url = urlparse(image_path)
             path = parsed_url.path
-            base64_img = f'data:image/{path.split('.')[-1]};base64,{self._encode_image(self._get_image(image_path))}'
+            base64_img = f'data:image/{path.split('.')[-1]};base64,{encode_image(get_image(image_path))}'
             image_content['image_url'] = {'url': base64_img}
         else:
             image_content['image_url'] = image_path
@@ -44,6 +58,10 @@ class GeminiImageExtractor(GeminiConfig):
         result = self.model.invoke([message])
 
         return result.content
+    
+    # def batch(self,):
+        # TODO: Develop batch method
+        # pass
 
     def _is_url(self, s):
         try:
@@ -51,13 +69,7 @@ class GeminiImageExtractor(GeminiConfig):
             return all([result.scheme, result.netloc])
         except Exception:
             return False
-
-    def _get_image(self, url):
-        response = requests.get(url, headers=REQUEST_HEADER)
-        if not response.ok:
-            response.raise_for_status()
-
-        return response.content
-
-    def _encode_image(self, image: bytes):
-        return base64.b64encode(image).decode('utf-8')
+        
+    def _is_base64_image(image: str):
+        return looks_like_base64(image)
+        
