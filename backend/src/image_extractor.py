@@ -12,7 +12,7 @@ from langchain_core.messages import HumanMessage
 from prompts import IMAGE_EXTRACTOR_PROMPT
 from scraper.utils import REQUEST_HEADER
 from gemini_config import GeminiConfig
-from utils import looks_like_base64
+from src.utils import looks_like_base64
 
 
 load_dotenv()
@@ -34,8 +34,8 @@ class GeminiImageExtractor(GeminiConfig):
     prompt = IMAGE_EXTRACTOR_PROMPT
     model = 'gemini-1.5-flash-latest'
 
-    def __init__(self, custom_prompt=None):
-        super().__init__('chat')  # Initialize the parent class with 'chat' model type
+    def __init__(self, custom_prompt=None, **kwargs):
+        super().__init__('chat', **(kwargs or {'temperature': 0.0, 'top_p': 0.1, 'top_k': 1}))  # Initialize the parent class with 'chat' model type
         self.prompt = custom_prompt or self.prompt
         self.text_content = {
             "type": "text",

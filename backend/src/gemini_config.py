@@ -20,17 +20,17 @@ class GeminiConfig:
     })
     state_lock = multiprocessing.Lock()
 
-    def __init__(self, model_type):
+    def __init__(self, model_type, **kwargs):
         if model_type not in self.model_types:
             raise Exception('There is no appropriate model type')
 
         self.model = None
         if model_type == 'chat':
-            self.model = ChatGoogleGenerativeAI(model=self.LLM_MODEL_NAME)
+            self.model = ChatGoogleGenerativeAI(model=self.LLM_MODEL_NAME, **kwargs)
         elif model_type == 'llm':
-            self.model = GoogleGenerativeAI(model=self.LLM_MODEL_NAME)
+            self.model = GoogleGenerativeAI(model=self.LLM_MODEL_NAME, **kwargs)
         else:
-            self.model = GoogleGenerativeAIEmbeddings(model=self.EMBEDDING_MODEL_NAME)
+            self.model = GoogleGenerativeAIEmbeddings(model=self.EMBEDDING_MODEL_NAME, **kwargs)
 
     @classmethod
     def _reset_counter(cls):

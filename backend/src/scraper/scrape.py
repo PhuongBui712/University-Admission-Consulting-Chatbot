@@ -1,6 +1,5 @@
 # TODO: parse html table
 import os, sys
-sys.path.append(os.path.abspath(os.path.dirname(__file__))) # add scraper dir to path (to import module from same dir)
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))) # add backend dir to path (to import module in src)
 
 import requests
@@ -11,7 +10,7 @@ from urllib.parse import urlparse, quote
 
 from src.image_extractor import GeminiImageExtractor
 from src.utils import load_json, write_json
-from utils import *
+from src.scraper.utils import *
 
 
 # helper functions
@@ -212,6 +211,7 @@ def crawl():
     news_url = 'https://tuyensinh.hcmus.edu.vn/th%C3%B4ng-tin-tuy%E1%BB%83n-sinh-%C4%91%E1%BA%A1i-h%E1%BB%8Dc'
     need2crawl_url = set(storage_urls['base_url']).difference(news_url)
     crawled_url = set()
+    data_dict = {}
     text_list = []
     table_list = []
     image_path_list = []
@@ -265,9 +265,13 @@ def crawl():
                     'release_date': release_date,
                     'hash_value': hash_value,
                 }
-                text_list.append(webpage_to_documents(url=url, title=title, text=text))
-                table_list += tables
-                image_path_list += image_paths
+
+                data_dict[url] = {}
+                data_dict[url]['text'] = text
+                data_dict[url]['table'] = tables
+                data_dict[url]['image_path'] = image_paths
+                data_dict[url]['title'] = title
+
                 need2crawl_url.update(references)
 
         # crawl base url
@@ -279,9 +283,12 @@ def crawl():
                     'hash_value': hash_value,
                 }
 
-                text_list.append(webpage_to_documents(url=url, title=title, text=text))
-                table_list += tables
-                image_path_list += image_paths
+                data_dict[url] = {}
+                data_dict[url]['text'] = text
+                data_dict[url]['table'] = tables
+                data_dict[url]['image_path'] = image_paths
+                data_dict[url]['title'] = title
+
                 need2crawl_url.update(references)
 
         crawled_url.update(storage_urls['base_url'].keys())
@@ -293,4 +300,4 @@ def crawl():
         # update sitemap file
         write_json(sitemap_path, storage_urls)
 
-        return text_list, table_list, image_path_list
+        return data_dict

@@ -19,7 +19,7 @@ class GeminiChunker(GeminiConfig):
     prompt = PromptTemplate.from_template(template=CHUNKING_PROMPT)
     
     def __init__(self):
-        super().__init__('llm')
+        super().__init__('llm', temperature=0.0, top_k=1, top_p=0.1)
         self.chain = self.prompt | self.model
         
     def split_text(self, text: List[str]):
