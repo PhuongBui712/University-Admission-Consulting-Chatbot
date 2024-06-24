@@ -1,5 +1,5 @@
 import os, sys
-sys.path.append(os.path.abspath(os.path.dirname(__file__))) # append src dir to path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import re
 import base64
@@ -9,9 +9,9 @@ from dotenv import load_dotenv
 from langchain_core.documents import Document
 from langchain_core.messages import HumanMessage
 
-from prompts import IMAGE_EXTRACTOR_PROMPT
-from scraper.utils import REQUEST_HEADER
-from gemini_config import GeminiConfig
+from src.prompts import IMAGE_EXTRACTOR_PROMPT
+from src.scraper.utils import REQUEST_HEADER
+from src.gemini_config import GeminiConfig
 from src.utils import looks_like_base64
 
 

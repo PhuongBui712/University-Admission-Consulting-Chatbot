@@ -6,7 +6,7 @@ from langchain_core.documents import Document
 from langchain_core.prompts import PromptTemplate
 from langchain_google_genai.llms import GoogleGenerativeAI
 from src.prompts import CHUNKING_PROMPT
-from gemini_config import GeminiConfig
+from src.gemini_config import GeminiConfig
 
 
 class Chunks(BaseModel):

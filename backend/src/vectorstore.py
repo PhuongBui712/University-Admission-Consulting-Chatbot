@@ -1,54 +1,62 @@
-# TODO: Initially, we will use a local vector database like Chroma but will switch if the program scales up.
-
 from langchain_chroma import Chroma
-from langchain.indexes import SQLRecordManager, index
 from langchain_core.embeddings.embeddings import Embeddings
+from langchain_pinecone import PineconeVectorStore
+from pinecone import Pinecone, ServerlessSpec, PodSpec
 
-import os
-from pathlib import Path
+from src.indexing import Indexing
 
+from typing import Literal, Any
 
-class _IndexConfig:
-    def __init__(self, collection_name: str = 'vectorstore'):
-        self.db_dir = os.path.join(Path(__file__).parent.parent.absolute(), 'database')
-        print(self.db_dir)
-        self.record_manager_path = f'{self.db_dir}/{collection_name}.sql'
-        self.record_manager = SQLRecordManager(
-            collection_name, db_url=f'sqlite:///{self.record_manager_path}'
-        )
-
-        if not os.path.exists(self.record_manager_path):
-            self.record_manager.create_schema()
-
-    def index(self, documents, vectorstore, source_id_key, cleanup='full'):
-        index(
-            docs_source=documents,
-            vector_store=vectorstore,
-            record_manager=self.record_manager,
-            source_id_key=source_id_key,
-            cleanup=cleanup
-        )
+# TODO: Apply RecordManager to manage index
 
 
-class VectorStore(_IndexConfig):
+class PineconeVectorDB:
+    # TODO: apply collections to save resources
     def __init__(self,
-                 embedding_function: Embeddings,
-                 relevant_score: str = 'cosine',
-                 collection_name: str = 'vectorstore'):
-        super().__init__(collection_name)
+                 index_name: str,
+                 embedding: Embeddings,
+                 embedding_dimension: int,
+                 metric: Literal['cosine', 'euclidean', 'dotproduct'] = 'cosine',
+                 use_severless: bool = True,
+                 create_new_index: bool = False):
+        
+        pinecone = Pinecone()
+        spec = ServerlessSpec(cloud='aws', region='us-east-1') if use_severless else PodSpec()
 
-        # TODO: Modify database (maybe cloud storage) for scaling
-        self.embedding = embedding_function
-        self.collection_metadata = {'hnsw:space': relevant_score}
-        self.vector_db = Chroma(embedding_function=self.embedding,
-                                persist_directory=self.db_dir,
-                                collection_metadata=self.collection_metadata)
+        if index_name in pinecone.list_indexes().names() and create_new_index:
+            pinecone.delete_index(index_name)
 
-    def index(self, documents, source_id_key, cleanup='full'):
-        super().index(documents, self.vector_db, source_id_key, cleanup)
+        if index_name in pinecone.list_indexes().names():
+            pinecone.create_index(
+                index_name,
+                dimension=embedding_dimension,
+                metric=metric,
+                spec=spec
+            )
 
-    def get_retriever(self, k=5):
-        return self.vector_db.as_retriever(search_kwargs={'k': k})
+        self.vectorstore = PineconeVectorStore(index_name=index_name, embedding=embedding)
 
-    def get_db(self):
-        return self.vector_db
+    def get_vectorstore(self):
+        return self._db
+    
+    def get_retriever(self, **kwargs):
+        return self._db.as_retriever(**kwargs)
+
+
+class ChromaVectorDB:
+    def __init__(self,
+                 collection_name: str,
+                 embedding: Embeddings,
+                 metric: str,
+                 persist_directory: str):
+        
+        self._db = Chroma(collection_name=collection_name,
+                          embedding_function=embedding,
+                          collection_metadata={'hnsw:space': metric},
+                          persist_directory=persist_directory)
+        
+    def get_vectorstore(self):
+        return self._db
+    
+    def get_retriever(self, **kwargs: Any):
+        return self._db.as_retriever(**kwargs)
