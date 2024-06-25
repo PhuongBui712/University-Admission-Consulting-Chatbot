@@ -1,5 +1,5 @@
 import os, sys
-sys.path.append(os.path.abspath(os.path.dirname(__file__)))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from langchain.retrievers import MultiVectorRetriever
 from langchain_core.output_parsers import StrOutputParser
@@ -11,7 +11,7 @@ from langchain_core.documents.compressor import BaseDocumentCompressor
 from langchain_core.retrievers import BaseRetriever
 
 
-from prompts import ADMISSION_CONSULTANT_PROMPT
+from src.prompts import ADMISSION_CONSULTANT_PROMPT
 from src.utils import get_image_type
 
 from typing import List
@@ -33,12 +33,13 @@ class RAG:
 
     def get_chain(self):
         chain = (
-            {
+            RunnableLambda(self._parse_input)
+            | {
                 'context': 
-                    self.multivector_retriever 
-                    | RunnableLambda(self._parse_retrieved_context) 
+                    RunnableLambda(print)
+                    | self.multivector_retriever 
                     | RunnableLambda(self._split_text_image_content),
-                'question': RunnablePassthrough()
+                'question': RunnablePassthrough(),
             }
             | RunnableLambda(self.reorder_method)
             | RunnableLambda(self._create_prompt)
@@ -48,8 +49,10 @@ class RAG:
 
         return chain
     
-    def _parse_retrieved_context(self, context: List[bytes]):
-        return [Document.parse_raw(b) for b in context]
+    def _parse_input(self, input):
+        if isinstance(input, dict):
+            return input['undefined'][0]['content']
+        return input
 
     def _split_text_image_content(self, retrieved_docs: List[Document]):
         texts = []
