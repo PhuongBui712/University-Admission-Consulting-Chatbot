@@ -28,7 +28,7 @@ with DAG(
         import os, sys
         sys.path.append(os.getcwd())
 
-        from backend.src.scraper import crawl
+        from data_etl.scraper import crawl
         from backend.src import write_json
 
         crawled_docs = crawl()

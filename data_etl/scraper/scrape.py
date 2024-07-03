@@ -10,7 +10,7 @@ from urllib.parse import urlparse, quote
 
 from src.image_extractor import GeminiImageExtractor
 from src.utils import load_json, write_json
-from src.scraper.utils import *
+from data_etl.scraper.utils import *
 
 
 # helper functions
@@ -96,6 +96,7 @@ def is_table(table_soup):
     if caption is None or not caption.get_text().startswith('Attachments'):
         return True
     return False
+
 
 def get_table(soup):
     table_elements = []
@@ -212,9 +213,6 @@ def crawl():
     need2crawl_url = set(storage_urls['base_url']).difference(news_url)
     crawled_url = set()
     data_dict = {}
-    text_list = []
-    table_list = []
-    image_path_list = []
 
     # crawl
     soup = get_web_soup(news_url)
