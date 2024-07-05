@@ -1,0 +1,11 @@
+.venv
+.idea
+
+__azurite_db*__.json
+__blobstorage__
+__queuestorage__
+
+README.md
+local.settings.json
+test.ipynb
+data/backup_sitemap.json

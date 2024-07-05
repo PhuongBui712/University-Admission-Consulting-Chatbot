@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  data_etl:
+    image: hcmusadmissiondataetl.azurecr.io/azf-hcmus-data-etl
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - "8080:80"
+      - "7071:7071"
+    volumes:
+      - ./.env:/home/site/wwwroot/.env
+      - ./function_app.py:/home/site/wwwroot/function_app.py
+      - ./azure_helper_functions.py:/home/site/wwwroot/azure_helper_functions.py
+      - ./data_process_functions.py:/home/site/wwwroot/data_process_functions.py

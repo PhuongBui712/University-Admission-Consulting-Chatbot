@@ -82,12 +82,16 @@ def get_blob_service_client() -> BlobServiceClient:
     Returns:
         BlobServiceClient: The BlobServiceClient object to interact with Azure Blob Storage.
     """
-    connect_str = os.environ['AzureWebJobsStorage']
+    connect_str = os.getenv('AzureWebJobsStorage', None)
     if connect_str == "UseDevelopmentStorage=true":
         blob_service_client = BlobServiceClient.from_connection_string(os.environ['AZURE_DEVELOPMENT_CONNECTION_STR'])
     else:
-        blob_service_client = BlobServiceClient.from_connection_string(connect_str)
-
+        try:
+            blob_service_client = BlobServiceClient.from_connection_string(connect_str)
+        except Exception as error:
+            logging.error(f'Failed to create BlobServiceClient: {error}')
+            logging.info('Retry with another way!')
+            blob_service_client = BlobServiceClient.from_connection_string(os.environ['CONNECTION_STRING'])
     return blob_service_client
 
 

@@ -1,4 +1,3 @@
-import os, sys
 import json
 import logging
 import azure.functions as func
@@ -6,7 +5,7 @@ from langchain_core.documents import Document
 from langchain_community.storage import MongoDBStore
 
 from modules.scraper.scrape import crawl
-from azure_helper_function import *
+from azure_helper_functions import *
 from data_process_functions import process_data, ingest_data
 
 

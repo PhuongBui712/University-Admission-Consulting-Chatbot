@@ -1,6 +1,5 @@
 import yaml
 import json
-import torch
 import re
 import base64
 from langchain_core.documents import Document
@@ -35,12 +34,6 @@ def load_json(path):
         result = json.load(file)
 
     return result
-
-
-def get_device():
-    device = 'cuda' if torch.cuda.is_available() else ('mps' if torch.backends.mps.is_available() else 'cpu')
-
-    return device
 
 
 def looks_like_base64(sb):
