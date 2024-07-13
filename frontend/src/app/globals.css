@@ -20,15 +20,15 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  /* background: linear-gradient(
+  background: linear-gradient(
     to bottom,
-    rgb(var(--background-start-rgb)),
-    rgb(var(--background-middle-rgb)),
-    rgb(var(--background-end-rgb))
-  ); */
-  background-image: url('../../public/images/background.jpg');
+    rgb(256, 256, 256),
+    rgb(256, 256, 256),
+    rgb(256, 256, 256)
+  );
+  /* background-image: url('../../public/images/background.jpg');
   background-size: cover;
-  background-position: center;
+  background-position: center; */
 }
 
 @layer utilities {
