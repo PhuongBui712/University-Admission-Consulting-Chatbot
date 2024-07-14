@@ -1,0 +1,58 @@
+.gradient-border-wrapper {
+  /* position: relative; */
+  /* padding: 3px;  */
+  /* border-radius: 10px; */
+  /* border-width: 3px; */
+  background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+  background-size: 300% 300%;
+  animation: gradientAnimation 3s ease alternate infinite;
+}
+
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.gradient-border-wrapper form {
+  background-color: #f4f4f4;
+  border-radius: 1.5rem;
+}
+
+.border-form {
+  border-radius: 3px;
+
+}
+/* .gradient-border {
+  --borderWidth: 2px;
+  border-width: 2px;
+  border-radius: var(--borderWidth);
+  background: #1D1F20;
+  position: relative;
+}
+.gradient-border:after {
+  content: '';
+  position: absolute;
+  top: calc(-1 * var(--borderWidth));
+  left: calc(-1 * var(--borderWidth));
+  height: calc(100% + var(--borderWidth) * 2);
+  width: calc(100% + var(--borderWidth) * 2);
+  background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+  border-radius: calc(2 * var(--borderWidth));
+  z-index: -1;
+  animation: animatedgradient 3s ease alternate infinite;
+  background-size: 300% 300%;
+}
+
+
+@keyframes animatedgradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+} */

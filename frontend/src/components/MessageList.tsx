@@ -11,7 +11,7 @@ interface MessageListProps {
   isLoading: boolean;
 }
 
-const MessageList: React.FC<MessageListProps> = ({ messages, isLoading }) => {
+export const MessageList: React.FC<MessageListProps> = ({ messages, isLoading }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -36,5 +36,3 @@ const MessageList: React.FC<MessageListProps> = ({ messages, isLoading }) => {
     </div>
   );
 };
-
-export default MessageList
