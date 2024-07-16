@@ -36,7 +36,8 @@ chain = chain.with_types(input_type=Question)
 add_routes(
     app,
     chain.with_types(input_type=dict, output_type=str),
-    playground_type='chat'
+    playground_type='chat',
+    path='/hcmus-ai-assistant'
 )
 
 

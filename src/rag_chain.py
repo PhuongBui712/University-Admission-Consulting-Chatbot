@@ -50,8 +50,11 @@ class RAG:
         return chain
     
     def _parse_input(self, input):
+        print(input)
         if isinstance(input, dict):
-            return input['undefined'][0]['content']
+            if 'undefined' in input:
+                return input['undefined'][-1]['content']
+            return input['text']
         return input
 
     def _split_text_image_content(self, retrieved_docs: List[Document]):
