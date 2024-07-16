@@ -25,7 +25,7 @@ async def redirect_root_to_docs():
 
 
 from src.main import chain
-from langchain_core.pydantic_v1 import BaseModel
+from pydantic.v1 import BaseModel
 
 
 class Question(BaseModel):
