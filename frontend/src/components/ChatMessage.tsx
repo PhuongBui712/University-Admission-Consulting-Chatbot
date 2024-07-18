@@ -1,19 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import user_icon from '../../public/images/user.jpg'
 import ai_icon from '../../public/images/logo.png'
 
-
 interface ChatMessageProps {
   role: 'user' | 'ai';
   content: string;
+  isStreaming?: boolean;
 }
 
-const ChatMessage: React.FC<ChatMessageProps> = ({ role, content }) => {
-  const userImage = '/path-to-user-image.jpg'; // Replace with the actual path to the user image
-  const aiImage = '/path-to-ai-image.jpg'; // Replace with the actual path to the AI image
+const ChatMessage: React.FC<ChatMessageProps> = ({ role, content, isStreaming }) => {
+  const [displayedContent, setDisplayedContent] = useState('');
+
+  useEffect(() => {
+    if (role === 'ai' && isStreaming) {
+      setDisplayedContent(content);
+    } else {
+      setDisplayedContent(content);
+    }
+  }, [content, role, isStreaming]);
 
   return (
     <div className={`flex ${role === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -28,13 +35,13 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ role, content }) => {
           : 'bg-white text-gray-800 shadow'
       }`}>
         {role === 'user' ? (
-          <p>{content}</p>
+          <p>{displayedContent}</p>
         ) : (
           <ReactMarkdown 
             remarkPlugins={[remarkGfm]}
             className="markdown-body"
           >
-            {content}
+            {displayedContent}
           </ReactMarkdown>
         )}
       </div>
@@ -46,5 +53,6 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ role, content }) => {
     </div>
   );
 }
+
 
 export default ChatMessage;

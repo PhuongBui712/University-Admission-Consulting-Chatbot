@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.14.1",
+    "@langchain/core": "^0.2.15",
     "axios": "^1.7.2",
     "dotenv": "^16.4.5",
     "next": "14.2.5",

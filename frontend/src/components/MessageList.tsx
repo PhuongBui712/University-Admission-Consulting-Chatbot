@@ -1,37 +1,38 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import ChatMessage from './ChatMessage';
 
 interface Message {
   role: 'user' | 'ai';
   content: string;
+  isStreaming?: boolean;
 }
 
 interface MessageListProps {
   messages: Message[];
-  isLoading: boolean;
 }
 
-export const MessageList: React.FC<MessageListProps> = ({ messages, isLoading }) => {
+export const MessageList: React.FC<MessageListProps> = ({ messages }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
-  useEffect(scrollToBottom, [messages]);
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   return (
-    <div className="flex-grow overflow-auto p-4 space-y-4">
+    <div 
+      ref={containerRef} 
+      className="h-full overflow-y-auto p-4 space-y-4"
+    >
       {messages.map((message, index) => (
-        <ChatMessage key={index} role={message.role} content={message.content} />
+        <ChatMessage key={index} role={message.role} content={message.content} isStreaming={message.isStreaming} />
       ))}
-      {isLoading && (
-        <div className="flex justify-start">
-          <div className="bg-white text-gray-800 p-3 rounded-lg shadow">
-            Thinking...
-          </div>
-        </div>
-      )}
       <div ref={messagesEndRef} />
     </div>
   );
