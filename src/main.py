@@ -10,23 +10,22 @@ from langchain_community.storage import MongoDBStore
 from langsmith import Client
 
 from src.rag_chain import RAG
-from src.vectorstore import ChromaVectorDB
+from src.vectorstore import PineconeVectorDB
 
 
 load_dotenv()
 client = Client()
-data_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../database'))
 
-vector_db = ChromaVectorDB(
-    collection_name='multimodal',
-    embedding=CohereEmbeddings(model='embed-multilingual-v3.0'),
-    metric='cosine',
-    persist_directory=data_path
+vector_db = PineconeVectorDB(
+    index_name=os.getenv('PINECONE_INDEX'),
+    embedding=CohereEmbeddings(model='embed-multilingual-v3.0')
 )
 
-store = MongoDBStore(connection_string=os.getenv('MONGODB_ATLAS_CLUSTER_URI'),
-                     db_name='document-store',
-                     collection_name='document-collection')
+store = MongoDBStore(
+    connection_string=os.getenv('MONGODB_ATLAS_CLUSTER_URI'),
+    db_name=os.getenv('MONGODB_DB_NAME'),
+    collection_name=os.getenv('MONGODB_COLLECTION_NAME')
+)
 
 multivector_retriever = MultiVectorRetriever(
     vectorstore=vector_db.get_vectorstore(),

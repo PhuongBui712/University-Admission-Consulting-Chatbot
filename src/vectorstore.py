@@ -17,7 +17,7 @@ class PineconeVectorDB:
                  metric: Literal['cosine', 'euclidean', 'dotproduct'] = 'cosine',
                  use_severless: bool = True,
                  create_new_index: bool = False):
-
+        
         pinecone = Pinecone()
         spec = ServerlessSpec(cloud='aws', region='us-east-1') if use_severless else PodSpec()
 
@@ -36,7 +36,7 @@ class PineconeVectorDB:
 
     def get_vectorstore(self):
         return self.vectorstore
-
+    
     def get_retriever(self, **kwargs):
         return self.vectorstore.as_retriever(**kwargs)
 
