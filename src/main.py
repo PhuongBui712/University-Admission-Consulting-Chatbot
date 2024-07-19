@@ -7,14 +7,12 @@ from langchain.retrievers import MultiVectorRetriever
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_chroma import Chroma
 from langchain_community.storage import MongoDBStore
-from langsmith import Client
 
 from src.rag_chain import RAG
 from src.vectorstore import PineconeVectorDB
 
 
 load_dotenv()
-client = Client()
 
 vector_db = PineconeVectorDB(
     index_name=os.getenv('PINECONE_INDEX'),
