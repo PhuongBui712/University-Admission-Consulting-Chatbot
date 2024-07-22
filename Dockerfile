@@ -4,8 +4,8 @@ WORKDIR /code
 
 COPY . /code
 
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 8000
 
-CMD [ "python", "/code/backend/app/server.py" ]
+CMD exec uvicorn backend.app.server:app --host 0.0.0.0 --port 8000

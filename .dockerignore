@@ -1,4 +1,5 @@
 .idea
+.git
 .venv
 airflow_dags
 assets
@@ -10,9 +11,19 @@ models
 notebooks
 test_data
 
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.swp
+*.swo
+*.DS_Store
+
 .favorites.json
 .gitignore
 .gitmodule
+.env
+.env.tmp
 LICENSE
 README.md
 
