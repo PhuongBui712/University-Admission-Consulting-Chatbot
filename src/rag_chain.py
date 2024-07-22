@@ -50,7 +50,6 @@ class RAG:
         return chain
     
     def _parse_input(self, input):
-        print(input)
         if isinstance(input, dict):
             if 'undefined' in input:
                 return input['undefined'][-1]['content']
