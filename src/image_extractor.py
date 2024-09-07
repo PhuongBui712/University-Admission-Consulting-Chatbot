@@ -10,12 +10,15 @@ from langchain_core.documents import Document
 from langchain_core.messages import HumanMessage
 
 from src.prompts import IMAGE_EXTRACTOR_PROMPT
-from data_etl.scraper.utils import REQUEST_HEADER
 from src.gemini_config import GeminiConfig
 from src.utils import looks_like_base64
 
 
 load_dotenv()
+REQUEST_HEADER = {
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) \
+    AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'
+}
 
 
 def get_image(image_path):

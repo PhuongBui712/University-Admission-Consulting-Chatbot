@@ -1,10 +1,8 @@
-from math import ceil
 from typing import List
 from tqdm.auto import tqdm
 from pydantic import BaseModel
 from langchain_core.documents import Document
 from langchain_core.prompts import PromptTemplate
-from langchain_google_genai.llms import GoogleGenerativeAI
 from src.prompts import CHUNKING_PROMPT
 from src.gemini_config import GeminiConfig
 

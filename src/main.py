@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 from langchain_cohere import CohereRerank, CohereEmbeddings
 from langchain.retrievers import MultiVectorRetriever
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_chroma import Chroma
 from langchain_community.storage import MongoDBStore
 
 from src.rag_chain import RAG
